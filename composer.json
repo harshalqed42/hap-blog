@@ -1,0 +1,18 @@
+{
+    "name": "harshalpradhan/hap_blog",
+    "description": "Simple Blogging Application",
+    "type": "project",
+    "license": "1.0",
+    "authors": [
+        {
+            "name": "Harshal Pradhan",
+            "email": "harshal.pradhan@qed42.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+      "psr-4": {
+        "HAPBlog\\": "src/" 
+      }
+    }
+}
