@@ -21,11 +21,15 @@ $data = $database->selectQuery('setup','*', [
 <html>
 <head>
     <h1>
-      Home
+      Login
     </h1>
 </head>
     <body>
-
+    <form id="user-login" action="/user-login.php" method="post">
+      <input  type="email" name="email"  placeholder="abcde@example.com"/>
+      <input  type="password" name="password"  placeholder="*****"/>
+      <input  type="submit" name="login" />
+    </form>
     </body>
 </html>
 

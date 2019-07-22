@@ -154,6 +154,19 @@ Class Database
       }
       return $cond;
     }
+
+
+    public function createTable($sql_query) {
+      $this->conn->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+      $stmt = $this->conn->prepare($sql_query);
+      try {
+        return $stmt->execute();
+      }
+      catch (\PDOException $e) {
+        echo $e->getMessage();
+      }
+
+    }
   
   
      /**
