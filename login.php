@@ -1,21 +1,20 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <?php
 require "vendor/autoload.php";
 use HAPBlog\Database\Database;
+use Pimple\Container;
 
-$database = new Database('localhost', 'root', 'root', 'harshal_blog');
+require __DIR__ . '/config.php';
+require __DIR__ . '/services.php';
+
+$container = new Container();
+$database = $container['connection'];
 $data = $database->selectQuery('setup','*', [
     'field'=>'status',
     'value' => 1,
     'operator' => '='
   ]
 );
-// if ($data) {
-//   header('Location: update.php');        
-// }
-// else {
-//   header('Location: new-config.php');  
-// }
 
 ?>
 <html>

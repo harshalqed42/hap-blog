@@ -6,14 +6,10 @@ use User_App\Database\Database;
 use User_App\User\User;
 
 Class UserAuthenticate {
-  public function __construct() {
-    $this->database = new Database(
-     'localhost',// $settings['host'],
-     'root', //$settings['user'],
-     'root', //$settings['pass'],
-     'harshal_blog'// $settings['db']
-    );
-  }
+    public function __construct($conn)
+    {
+      $this->database = $conn;
+    }
   public  function logout() {
     session_destroy();
     header('location: login.php');

@@ -9,7 +9,9 @@
             "email": "harshal.pradhan@qed42.com"
         }
     ],
-    "require": {},
+    "require": {
+        "pimple/pimple": "~3.0"
+    },
     "autoload": {
       "psr-4": {
         "HAPBlog\\": "src/" 

@@ -3,68 +3,99 @@
 
 namespace HAPBlog\User;
 use HAPBlog\Database\Database;
+use Pimple\Container;
 
-Class User {
+Class User extends EntityManager{
+    const TABLE = ''; 
+    // self::TABLE = 'user'; //@todo should I write here or inside constructor
+    public function __construct($conn)
+      {
+        self::TABLE = 'user';
+        parent::__construct($conn, self::TABLE);  
+      }
 
-  public function __construct(){
-    //new class
-    $this->database = new Database('localhost', 'root', 'root', 'user_ap');
-    $this->conn = $this->database;
-  }
-  
-  public function load($username) {
-    $rows = $this->database->selectQuery('users',
-      [
-       'username',
-       'first_name',
-       'last_name',
-       'email'
-      ],
-      [ 
-        [
-         'field' => 'username',
-         'operator' => '=',
-         'value' => $username
-        ]
-      ]
-    );
-    return (isset($rows[0])) ? $rows[0] : [];
-  }
+      /**
+       * Load User by id.
+       *
+       * @param int $id 
+       *    User Id.
+       *
+       * @return object
+       *  User Object.
+       */
+       public function load($id) {
+        parent::load($id);  
+       }
 
-  public function user_exists($username) {
-    if ($this->load($username)) {
-      return true;  
-    }
-    return false;
-  }
-  
-  public function create($username, $pass, $user_details) {
-    if (!$this->user_exists($username)) {
-      $table = 'users';
-      $fields_arr = [
-        'username' => $username,
-        'password' => password_hash($pass, PASSWORD_BCRYPT)
-      ];
-      $fields_arr += $user_details;
-      $fields = array_keys($fields_arr);
-      $values = array_values($fields_arr);     
-      return $this->database->insertQuery($table, $fields, $values);
-    }
-    return [];
-  }
-  
-  public function delete($username) {      
-    $query = $this->database->deleteQuery('users',[
-        [
-          'field' => 'username',
-          'operator' => '=',
-          'value' => $username
-        ]
-    ]);
-  }
 
-  public function update() {
 
-  }
+      /**
+       * Create User.
+       *
+       * @data 
+       *   User Data.
+       *
+       * @return int
+       *   User Id
+       */
+       public function create($data) {
+         parent::load($data); 
+       }
 
+
+       /**
+        * Update User Object.
+        *
+        * @data 
+        *   User Data.
+        * @id
+        *   User Id
+        *
+        * @return object
+        *   User Object
+        */
+        public function update($data, $id) {
+          parent::update($data, $id);   
+        }
+
+        /**
+         * Deleting a User.
+         *
+         * @id 
+         *   User Id.
+         *
+         * @return boolean
+         *   true on deletion or false 
+         */
+         public function delete($id) {
+            parent::delete($id);
+         }
+
+        /**
+         * Deleting a User.
+         *
+         * @id 
+         *   User Id.
+         *
+         * @return boolean
+         *   true on deletion or false 
+         */
+        public function userExists($id) {
+          if ($this->load($id)) {
+            return true;  
+          }
+          return false;
+        }
+
+        public function userExistsByEmail($email) {
+           $conditions = [
+             'operator' => '=',
+             'field' => 'email',
+             'value' => $email
+           ];
+           $data = $this->database->selectQuery(self::TABLE, ['id'], $conditions);
+           if (isset($data['id'])) {
+             return TRUE;  
+           }
+        }
 }

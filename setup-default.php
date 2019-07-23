@@ -40,3 +40,22 @@ $sql_user = 'CREATE TABLE IF NOT EXISTS user(
 if ($db->database->createTable($sql_user)) {
     echo "User Table Created Successfully<br><br>";
 }
+
+$sql_blog = 'CREATE TABLE IF NOT EXISTS blog (
+    id int (10) NOT NULL AUTO_INCREMENT PRIMARY KEY,                               
+    description longtext,
+    title varchar(255),
+    image int(10) UNSIGNED NOT NULL,
+    reading_time varchar(32),
+    category int(10) UNSIGNED NOT NULL,
+    author int (10),
+    status boolean,
+    FOREIGN KEY (image) references image(id),
+    FOREIGN KEY (category) references category(id)
+  );';
+  
+  if ($db->database->createTable($sql_blog)) {
+      echo "Blog Table Created Successfully<br><br>";
+  }
+
+

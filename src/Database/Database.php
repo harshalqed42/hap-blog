@@ -121,14 +121,12 @@ Class Database
       $cond = $this->getConditionString($conditions);    
       $query = 'DELETE from :table' . 
                ' WHERE ' . $cond .';';
-               $conn = $this->conn;
-               $conn->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
-               $stmt = $conn->prepare($query);
-               $stmt->execute(["table" => $table]);
-      return (!empty($stmt)) ? $data : [];
-           
-  
+      $conn = $this->conn;
+      $conn->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+      $stmt = $conn->prepare($query);
+      return  $stmt->execute(["table" => $table]);          
     }
+    
     /**
      * @param  array $conditions
      *   array of conditions
@@ -157,7 +155,6 @@ Class Database
 
 
     public function createTable($sql_query) {
-      $this->conn->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
       $stmt = $this->conn->prepare($sql_query);
       try {
         return $stmt->execute();
