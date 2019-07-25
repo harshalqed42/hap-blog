@@ -77,32 +77,21 @@ Class Blog extends EntityManager
          public function delete($id) {
             parent::delete($id);
          }
-
          /**
          * Deleting a Blog.
          *
-         * @id 
+         * @param int $id 
          *   Blog Id.
-         *
+         * 
+         * @param boolean $status
+         *   
          * @return boolean
-         *   true on deletion or false 
+         *   true on updation else false 
          */
-        public function unpublish($id) {
-          $data['status'] = UNPUBLISHED;
-          parent::update($data, $id)
-         }
-
-         /**
-         * Deleting a Blog.
-         *
-         * @id 
-         *   Blog Id.
-         *
-         * @return boolean
-         *   true on deletion or false 
-         */
-        public function publish($id,'publ') {
-            $data['status'] = PUBLISHED;
-            parent::update($data, $id)
-         }
+        public function update_status($id, $status) {
+          $this->update(
+            ['status' => $status],
+            $id
+          );
+        }
 }

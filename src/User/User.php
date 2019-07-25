@@ -3,7 +3,6 @@
 
 namespace HAPBlog\User;
 use HAPBlog\Database\Database;
-use Pimple\Container;
 
 Class User extends EntityManager{
     const TABLE = ''; 
@@ -72,7 +71,7 @@ Class User extends EntityManager{
          }
 
         /**
-         * Deleting a User.
+         * Check if a User exists.
          *
          * @id 
          *   User Id.
@@ -80,13 +79,22 @@ Class User extends EntityManager{
          * @return boolean
          *   true on deletion or false 
          */
-        public function userExists($id) {
+        public function userExistsById($id) {
           if ($this->load($id)) {
             return true;  
           }
           return false;
         }
 
+        /**
+         * Check if a User exists.
+         *
+         * @id 
+         *   User Id.
+         *
+         * @return boolean
+         *   true on deletion or false 
+         */
         public function userExistsByEmail($email) {
            $conditions = [
              'operator' => '=',

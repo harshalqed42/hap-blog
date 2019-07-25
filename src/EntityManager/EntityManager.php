@@ -1,5 +1,4 @@
 <?php
-<?php
 /**
  * EntityManager Implementation
  */
@@ -14,12 +13,13 @@ use HAPBlog\Database\Database;
 
 Class EntityManager
 {    
-    const TABLE = '';
+      private $_table;
       public function __construct($conn, $type)
       { 
+        // @todo: Create an Interface.
         //$type;@todo check how class name is defined
         //after that use $type passed in construct.
-        self::TABLE = __CLASS__ ;
+        $this->_table = $type;
         $this->database = $conn;
       }
 
@@ -34,7 +34,7 @@ Class EntityManager
        */
        public function load($id) {
            //@todo check if table is invoked
-        return (obj) $this->database->selectQuery(self::TABLE, '*', [
+        return (obj) $this->database->selectQuery($this->table, '*', [
             'operator' => '=',
             'field' => 'id',
             'value'=> $id

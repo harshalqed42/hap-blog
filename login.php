@@ -4,10 +4,10 @@ require "vendor/autoload.php";
 use HAPBlog\Database\Database;
 use Pimple\Container;
 
-require __DIR__ . '/config.php';
+$container = new Container();
+require __DIR__ . '/config.php'; 
 require __DIR__ . '/services.php';
 
-$container = new Container();
 $database = $container['connection'];
 $data = $database->selectQuery('setup','*', [
     'field'=>'status',
@@ -15,7 +15,6 @@ $data = $database->selectQuery('setup','*', [
     'operator' => '='
   ]
 );
-
 ?>
 <html>
 <head>

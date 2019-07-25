@@ -1,15 +1,12 @@
 <?php
+//@todo : how is $container accessible without defining it.
+use HAPBlog\Database\Database;
 
-use Pimple\Container;
-
-
-$container = new Container();
-
-$container['connection'] = function ($container) { 
+$container['connection'] = function ($container) {
    return new Database(
-        $conn['connection.hostname'],
-        $conn['connection.username'],
-        $conn['connection.password'],
-        $conn['connection.database']
+     $container['connection.hostname'],
+     $container['connection.username'],
+     $container['connection.password'],
+     $container['connection.database']
    );
-}
+};

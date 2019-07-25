@@ -1,17 +1,21 @@
 <?php
 require 'vendor/autoload.php';
 
-use HAPBlog\Connection\Connection;
+use Pimple\Container;
 
-$db = new Connection();
-$db->database->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$container = new Container();
+require __DIR__ .'/config.php';
+require __DIR__ .'/services.php';
+$database = $container['connection'];
+$database->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $sql_image = 'CREATE TABLE IF NOT EXISTS image (
     id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     entity_type VARCHAR(32) NOT NULL,
+    url VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 )';
 
-if ($db->database->createTable($sql_image)) {
+if ($database->createTable($sql_image)) {
   echo "Image Table Created Successfully<br><br>";
 }
 
@@ -21,7 +25,7 @@ $sql_category = 'CREATE TABLE IF NOT EXISTS category (
   PRIMARY KEY (id)
 );';
 
-if ($db->database->createTable($sql_category)) {
+if ($database->createTable($sql_category)) {
   echo "Category Table Created Successfully<br><br>";
 }
 
@@ -37,7 +41,7 @@ $sql_user = 'CREATE TABLE IF NOT EXISTS user(
   FOREIGN KEY (category) references category(id)
 );';
 
-if ($db->database->createTable($sql_user)) {
+if ($database->createTable($sql_user)) {
     echo "User Table Created Successfully<br><br>";
 }
 
@@ -54,7 +58,7 @@ $sql_blog = 'CREATE TABLE IF NOT EXISTS blog (
     FOREIGN KEY (category) references category(id)
   );';
   
-  if ($db->database->createTable($sql_blog)) {
+  if ($database->createTable($sql_blog)) {
       echo "Blog Table Created Successfully<br><br>";
   }
 

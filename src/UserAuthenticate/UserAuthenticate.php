@@ -1,9 +1,9 @@
 <?php
 
-namespace User_App\UserAuthenticate;
+namespace HAPBlog\UserAuthenticate;
 
-use User_App\Database\Database;
-use User_App\User\User;
+use HAPBlog\Database\Database;
+use HAPBlog\User\User;
 
 Class UserAuthenticate {
     public function __construct($conn)
@@ -16,8 +16,8 @@ Class UserAuthenticate {
   }
   
   
-  public function user_login($email, $password) {
-    $rows = $this->database->selectQuery('users', '*', [
+  public function userLogin($email, $password) {
+    $rows = $this->database->selectQuery('user', '*', [
       [ 
         'field' => 'email',
         'operator' => '=',
@@ -33,7 +33,7 @@ Class UserAuthenticate {
       if (!password_verify($password, $rows[0]['password'])) {
         echo "Username or Password does not exists/match.";
       }
-      $this->setLoggedInSession($username);
+      $this->setLoggedInSession($_POST['username']);
       $user_obj = new User();
       $user = $user_obj->load($_POST['username']);
       setcookie('first_name', $user['first_name']);
@@ -108,8 +108,8 @@ Class UserAuthenticate {
   }
 
   
-  protected function setLoggedInSession($username) {
-    $_SESSION['logged_in']['username'] = $username;
+  protected function setLoggedInSession($id) {
+    $_SESSION['logged_in']['id'] = $id;
   }
   protected function setRegisterSuccess() {
     $_SESSION['reg_success'] = 1;

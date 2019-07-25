@@ -13,7 +13,7 @@ if ($data) {
   header('Location: update.php');        
 }
 
-$setup_table = "create TABLE IF NOT EXISTS setup(
+$setup_table = "Create TABLE IF NOT EXISTS setup(
       id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       user boolean,
       blog boolean,
@@ -25,7 +25,8 @@ $setup_table = "create TABLE IF NOT EXISTS setup(
       image boolean,
       title VARCHAR(255) NOT NULL,
       status boolean 
-    );";    
+    );";
+        
 $setup_exec = $database->conn->exec($setup_table);
 
 
@@ -57,6 +58,8 @@ if (isset($_POST['submit'])) {
     ];
 
     $database->insertQuery('setup', $fields, $values);
+
+
 }
 
 echo "Setup Initiated Successfully.";  
